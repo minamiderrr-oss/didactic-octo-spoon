@@ -1,0 +1,6 @@
+@echo off
+echo Installing dependencies (first run may take a while)...
+npm i
+echo Starting the app...
+npm run dev
+pause

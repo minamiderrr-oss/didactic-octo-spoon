@@ -1,0 +1,73 @@
+{
+  "name": "lol-pick-advisor-pro-plus",
+  "version": "1.1.0",
+  "private": true,
+  "type": "module",
+  "main": "electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"wait-on http://localhost:5173 && cross-env VITE_DEV=1 electron .\"",
+    "build:web": "vite build",
+    "app:prod": "cross-env VITE_DEV=0 electron .",
+    "pack": "vite build && electron-builder --dir",
+    "dist:win": "vite build && electron-builder -w nsis portable --x64",
+    "dist:mac": "vite build && electron-builder -m dmg",
+    "dist:linux": "vite build && electron-builder -l AppImage",
+    "dist:all": "vite build && electron-builder -w nsis portable -m dmg -l AppImage"
+  },
+  "dependencies": {
+    "axios": "^1.7.2",
+    "express": "^4.19.2",
+    "framer-motion": "^11.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^8.2.2",
+    "cross-env": "^7.0.3",
+    "electron": "^31.2.0",
+    "postcss": "^8.4.39",
+    "tailwindcss": "^3.4.7",
+    "vite": "^5.3.4",
+    "wait-on": "^7.2.0",
+    "electron-builder": "^24.9.1"
+  },
+  "build": {
+    "appId": "gg.pick.advisor",
+    "productName": "LoL Pick Advisor Pro++",
+    "asar": true,
+    "files": [
+      "dist/**",
+      "electron/**",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "build"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false
+    },
+    "mac": {
+      "target": [
+        "dmg"
+      ],
+      "category": "public.app-category.utilities",
+      "hardenedRuntime": false
+    },
+    "linux": {
+      "target": [
+        "AppImage"
+      ],
+      "category": "Utility"
+    }
+  }
+}
